@@ -3,13 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/guess_gui.dart';
-
+import 'package:twitch_emote/widgets/buttons.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
-
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -18,8 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -32,60 +29,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 200,
               ),
             ),
-            Container(
-              margin: EdgeInsets.all(20),
-              height: 50.0,
-                width: 600,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                  side: BorderSide(color: Colors.deepPurple)),
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(CupertinoPageRoute(builder: (_)=> GuessGUI()));
-                  },
-                  padding: EdgeInsets.all(10.0),
-                  color: Colors.deepPurple,
-                  textColor: Colors.white,
-                  child: Text("TIME GAME",
-                  style: TextStyle(fontSize: 15)),
-              ),
+            MenuButton(
+              name: "TIME GAME",
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => GuessGUI()));
+              },
             ),
-            Container(
-              margin: EdgeInsets.all(20),
-              height: 50.0,
-              width: 600,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.deepPurple)),
-                onPressed: () {},
-                padding: EdgeInsets.all(10.0),
-                color: Colors.deepPurple,
-                textColor: Colors.white,
-                child: Text("STREAK GAME",
-                    style: TextStyle(fontSize: 15)),
-              ),
+            MenuButton(
+              name: "STREAK GAME",
+              onPressed: () {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => GuessGUI()));
+              },
             ),
-            Container(
-              margin: EdgeInsets.all(20),
-              height: 50.0,
-              width: 600,
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.deepPurple)),
-                onPressed: () {},
-                padding: EdgeInsets.all(10.0),
-                color: Colors.deepPurple,
-                textColor: Colors.white,
-                child: Text("STATS",
-                    style: TextStyle(fontSize: 15)),
-              ),
-            ),
+            MenuButton(
+              name: "STATS",
+              onPressed: () {},
+            )
           ],
         ),
-      ),
-      // This trailing comma makes auto-formatting nicer for build methods.
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
