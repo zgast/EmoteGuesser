@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/GUI/buttons.dart';
 import 'package:twitch_emote/guess_gui.dart';
 import 'package:twitch_emote/no_connection.dart';
-import 'package:twitch_emote/widgets/buttons.dart';
 
 import 'helper/check.dart';
 

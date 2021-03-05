@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/GUI/buttons.dart';
 import 'package:twitch_emote/helper/check.dart';
 import 'package:twitch_emote/homescreen.dart';
-import 'package:twitch_emote/widgets/buttons.dart';
 
 class no_connection_GUI extends StatefulWidget {
   @override
