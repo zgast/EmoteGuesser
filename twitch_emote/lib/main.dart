@@ -17,6 +17,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Twitch Emote',
       theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.deepPurple,
+        backgroundColor: Colors.white,
+        buttonTheme: ButtonThemeData(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.deepPurple)),
+          padding: EdgeInsets.all(10.0),
+        ),
+        buttonColor: Colors.deepPurple,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
         primarySwatch: Colors.deepPurple,
         backgroundColor: Colors.white,
         buttonTheme: ButtonThemeData(

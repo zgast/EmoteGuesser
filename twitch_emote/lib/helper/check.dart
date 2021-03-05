@@ -1,18 +1,18 @@
 import 'dart:io';
 
-class check{
+class check {
   final String name = "KEKW";
 
-   bool isEqual(String text) {
-      if(name.toLowerCase()==text.toLowerCase()){
-        return true;
-      }
-      return false;
+  bool isEqual(String text) {
+    if (name.toLowerCase() == text.toLowerCase()) {
+      return true;
+    }
+    return false;
   }
 
   Future<bool> checkConnection() async {
     try {
-      final result = await InternetAddress.lookup('google.com');
+      final result = await InternetAddress.lookup('api.zgast.at');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         return Future<bool>.value(true);
       }

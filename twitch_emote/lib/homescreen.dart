@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/guess_gui.dart';
+import 'package:twitch_emote/no_connection.dart';
 import 'package:twitch_emote/widgets/buttons.dart';
+
+import 'helper/check.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -13,8 +16,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void _checkConnection() async {
+    if (!(await check().checkConnection())) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => no_connection_GUI()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(

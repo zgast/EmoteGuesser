@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/helper/check.dart';
-
+import 'helper/check.dart';
 import 'helper/stop_watch.dart';
+import 'homescreen.dart';
+import 'no_connection.dart';
 
 class GuessGUI extends StatefulWidget {
   @override
@@ -17,13 +18,28 @@ class _GuessGUIState extends State<GuessGUI>
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   int counter = 0;
+  void _checkConnection() async {
+    if (!(await check().checkConnection())) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => no_connection_GUI()));
+    }
+  }
 
   @override
   void initState() {
+    final int seconds = 10;
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 10));
+        AnimationController(vsync: this, duration: Duration(seconds: seconds));
     _controller.forward();
+    _onCountDownFinish(seconds: seconds);
+  }
+
+  void _onCountDownFinish({int seconds}) async {
+    await Future.delayed(Duration(seconds: seconds - 1));
+    // save this shit
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
   }
 
   void incrementedCounter() {
@@ -34,6 +50,7 @@ class _GuessGUIState extends State<GuessGUI>
 
   @override
   Widget build(BuildContext context) {
+    _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -41,7 +58,7 @@ class _GuessGUIState extends State<GuessGUI>
       ),
       body: Center(
         child: Column(
-          children: <Widget>[
+          children: [
             Container(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
