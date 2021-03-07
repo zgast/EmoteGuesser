@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/GUI/buttons.dart';
-import 'package:twitch_emote/guess_gui.dart';
 import 'package:twitch_emote/no_connection.dart';
+import 'package:twitch_emote/streak%20_gui.dart';
+import 'package:twitch_emote/time_gui.dart';
 
 import 'helper/check.dart';
 
@@ -16,6 +17,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  streak_count _counter = new streak_count();
   void _checkConnection() async {
     if (!(await check().checkConnection())) {
       Navigator.of(context).pushReplacement(
@@ -25,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _counter(false, true);
     _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -51,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
               name: "STREAK GAME",
               onPressed: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => GuessGUI()));
+                    MaterialPageRoute(builder: (_) => streak_gui()));
               },
             ),
             MenuButton(

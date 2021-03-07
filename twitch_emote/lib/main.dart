@@ -21,7 +21,6 @@ class MyApp extends StatelessWidget {
         ),
         buttonColor: Colors.deepPurple,
       ),
-      darkTheme: ThemeData.dark(),
       home: MyHomePage(title: 'Twitch Emote Guesser'),
     );
   }

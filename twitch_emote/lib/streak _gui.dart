@@ -2,22 +2,23 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/homescreen.dart';
 
 import 'helper/check.dart';
 import 'helper/stop_watch.dart';
-import 'homescreen.dart';
 import 'no_connection.dart';
 
-class GuessGUI extends StatefulWidget {
+class streak_gui extends StatefulWidget {
   @override
-  _GuessGUIState createState() => _GuessGUIState();
+  _streak_gui_state createState() => _streak_gui_state();
 }
 
-class _GuessGUIState extends State<GuessGUI>
+class _streak_gui_state extends State<streak_gui>
     with SingleTickerProviderStateMixin {
+  streak_count _counter = new streak_count();
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
-  int counter = 0;
+  var counter;
   void _checkConnection() async {
     if (!(await check().checkConnection())) {
       Navigator.of(context).pushReplacement(
@@ -27,7 +28,7 @@ class _GuessGUIState extends State<GuessGUI>
 
   @override
   void initState() {
-    final int seconds = 10;
+    final int seconds = 5;
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: seconds));
@@ -37,19 +38,26 @@ class _GuessGUIState extends State<GuessGUI>
 
   void _onCountDownFinish({int seconds}) async {
     await Future.delayed(Duration(seconds: seconds - 1));
-    // save this shit
+    _controller.dispose();
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
   }
 
   void incrementedCounter() {
-    setState(() {
-      counter++;
-    });
+    _counter(true, false);
+    _controller.dispose();
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => streak_gui(),
+        transitionDuration: Duration(seconds: 0),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    counter = _counter(false, false).toString().padLeft(2, '0');
     _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -68,7 +76,7 @@ class _GuessGUIState extends State<GuessGUI>
                     Container(
                       padding: new EdgeInsets.only(top: 30, left: 50),
                       child: Text(
-                        '$counter',
+                        counter,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
@@ -76,11 +84,11 @@ class _GuessGUIState extends State<GuessGUI>
                     ),
                     Container(
                       margin:
-                          new EdgeInsets.only(top: 30, right: 50, left: 200),
+                          new EdgeInsets.only(top: 30, right: 50, left: 190),
                       alignment: Alignment.topLeft,
                       child: Countdown(
                         animation: StepTween(
-                          begin: 10,
+                          begin: 5,
                           end: 0,
                         ).animate(_controller),
                       ),
@@ -114,5 +122,18 @@ class _GuessGUIState extends State<GuessGUI>
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class streak_count implements Function {
+  static var count = 0;
+
+  call(bool plus, bool reset) {
+    if (plus) {
+      count++;
+    } else if (reset) {
+      count = 0;
+    }
+    return count;
   }
 }
