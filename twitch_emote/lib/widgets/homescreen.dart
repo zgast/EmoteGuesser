@@ -3,11 +3,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/GUI/buttons.dart';
-import 'package:twitch_emote/no_connection.dart';
-import 'package:twitch_emote/streak%20_gui.dart';
-import 'package:twitch_emote/time_gui.dart';
 
-import 'helper/check.dart';
+import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/no_connection.dart';
+import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/streak%20_gui.dart';
+import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/time_gui.dart';
+
+import '../helper/check.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

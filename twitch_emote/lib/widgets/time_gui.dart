@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/GUI/guess_widgets.dart';
 
-import 'helper/check.dart';
-import 'helper/stop_watch.dart';
+import '../helper/check.dart';
 import 'homescreen.dart';
 import 'no_connection.dart';
 
@@ -63,48 +63,14 @@ class _GuessGUIState extends State<GuessGUI>
         child: Column(
           children: [
             Container(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Container(
-                      padding: new EdgeInsets.only(top: 30, left: 50),
-                      child: Text(
-                        stringCounter,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30),
-                      ),
-                    ),
-                    Container(
-                      margin:
-                          new EdgeInsets.only(top: 30, right: 50, left: 190),
-                      alignment: Alignment.topLeft,
-                      child: Countdown(
-                        animation: StepTween(
-                          begin: 20,
-                          end: 0,
-                        ).animate(_controller),
-                      ),
-                    ),
-                  ]),
-            ),
-            Container(
-              width: 300,
-              margin: new EdgeInsets.only(bottom: 50, top: 50),
-              child: TextField(
-                controller: _textEditingController,
-                onChanged: (text) {
-                  if (check().isEqual(text)) {
-                    _textEditingController.clear();
-                    incrementedCounter();
-                  }
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Emote'),
+              child: counter_timer(
+                counter: stringCounter,
+                controller: _controller,
               ),
             ),
+            guess_textfield(
+                incrementedCounter: incrementedCounter,
+                textEditingController: _textEditingController),
             Container(
               child: Image.network(
                 'https://www.streamscheme.com/wp-content/uploads/2020/07/kekw-emote.jpg',

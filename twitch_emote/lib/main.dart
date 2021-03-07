@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/button_theme.dart';
-import 'package:twitch_emote/homescreen.dart';
+
+import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
 
 void main() async {
   runApp(MyApp());
