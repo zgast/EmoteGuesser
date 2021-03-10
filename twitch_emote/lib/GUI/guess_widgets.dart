@@ -5,8 +5,12 @@ import 'package:twitch_emote/helper/stop_watch.dart';
 class counter_timer extends StatelessWidget {
   final String counter;
   final AnimationController controller;
+  final int length;
 
-  counter_timer({@required this.counter, @required this.controller});
+  counter_timer(
+      {@required this.counter,
+      @required this.controller,
+      @required this.length});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class counter_timer extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: Countdown(
               animation: StepTween(
-                begin: 6,
+                begin: length,
                 end: 0,
               ).animate(controller),
             ),

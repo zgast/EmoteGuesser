@@ -66,6 +66,7 @@ class _GuessGUIState extends State<GuessGUI>
               child: counter_timer(
                 counter: stringCounter,
                 controller: _controller,
+                length: 20,
               ),
             ),
             guess_textfield(

@@ -71,6 +71,7 @@ class _streak_gui_state extends State<streak_gui>
                 child: counter_timer(
               controller: _controller,
               counter: counter,
+              length: 6,
             )),
             guess_textfield(
                 incrementedCounter: incrementedCounter,
