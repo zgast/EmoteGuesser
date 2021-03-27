@@ -1,16 +1,13 @@
 class Picture {
-  final String name = null;
-  final String URL = null;
+  String name;
+  String URL;
 
   Picture({this.name, this.URL});
 
   factory Picture.fromJson(Map<String, dynamic> json) {
     return Picture(
-      name: json['name'],
-      URL: json['URL'],
+      name: json["name"],
+      URL: json["url"],
     );
-  }
-  String getName() {
-    return this.name;
   }
 }

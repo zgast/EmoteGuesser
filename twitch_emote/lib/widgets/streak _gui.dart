@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/guess_widgets.dart';
 
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
@@ -20,32 +21,17 @@ class _streak_gui_state extends State<streak_gui>
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   var counter;
-  void _checkConnection() async {
+
+  void _start() async {
     if (!(await check().checkConnection())) {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => no_connection_GUI()));
     }
   }
 
-  @override
-  void initState() {
-    final int seconds = 6;
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: seconds));
-    _controller.forward();
-    _onCountDownFinish(seconds: seconds);
-  }
-
-  void _onCountDownFinish({int seconds}) async {
-    await Future.delayed(Duration(seconds: seconds - 1));
-    _controller.dispose();
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
-  }
-
-  void incrementedCounter() {
+  void incrementedCounter() async {
     _counter(true, false);
+    await randomPic().get();
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
@@ -58,7 +44,8 @@ class _streak_gui_state extends State<streak_gui>
   @override
   Widget build(BuildContext context) {
     counter = _counter(false, false).toString().padLeft(2, '0');
-    _checkConnection();
+    _start();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -78,7 +65,7 @@ class _streak_gui_state extends State<streak_gui>
                 textEditingController: _textEditingController),
             Container(
               child: Image.network(
-                'https://www.streamscheme.com/wp-content/uploads/2020/07/kekw-emote.jpg',
+                randomPic.URL,
                 width: 300,
                 height: 300,
               ),
@@ -86,8 +73,24 @@ class _streak_gui_state extends State<streak_gui>
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  @override
+  void initState() {
+    final int seconds = 6;
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: seconds));
+    _controller.forward();
+    _onCountDownFinish(seconds: seconds);
+  }
+
+  void _onCountDownFinish({int seconds}) async {
+    await Future.delayed(Duration(seconds: seconds - 1));
+    _controller.dispose();
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
   }
 }
 

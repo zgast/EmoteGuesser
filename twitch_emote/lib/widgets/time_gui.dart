@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/guess_widgets.dart';
 
 import '../helper/check.dart';
@@ -15,10 +16,12 @@ class GuessGUI extends StatefulWidget {
 
 class _GuessGUIState extends State<GuessGUI>
     with SingleTickerProviderStateMixin {
+  static String URL = randomPic.URL;
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   int counter = 0;
   var stringCounter;
+
   void _checkConnection() async {
     if (!(await check().checkConnection())) {
       Navigator.of(context).pushReplacement(
@@ -26,27 +29,14 @@ class _GuessGUIState extends State<GuessGUI>
     }
   }
 
-  @override
-  void initState() {
-    final int seconds = 20;
-    super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: seconds));
-    _controller.forward();
-    _onCountDownFinish(seconds: seconds);
-  }
-
-  void _onCountDownFinish({int seconds}) async {
-    await Future.delayed(Duration(seconds: seconds - 1));
-    // save this shit
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
-  }
-
-  void incrementedCounter() {
+  void nextStep() async {
+    await randomPic().get();
     setState(() {
       counter++;
       stringCounter = counter.toString().padLeft(2, '0');
+    });
+    setState(() {
+      URL = randomPic.URL;
     });
   }
 
@@ -70,11 +60,12 @@ class _GuessGUIState extends State<GuessGUI>
               ),
             ),
             guess_textfield(
-                incrementedCounter: incrementedCounter,
+                incrementedCounter: nextStep,
                 textEditingController: _textEditingController),
             Container(
               child: Image.network(
-                'https://www.streamscheme.com/wp-content/uploads/2020/07/kekw-emote.jpg',
+                URL,
+                key: ValueKey(URL),
                 width: 300,
                 height: 300,
               ),
@@ -84,5 +75,21 @@ class _GuessGUIState extends State<GuessGUI>
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  @override
+  void initState() {
+    final int seconds = 20;
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: seconds));
+    _controller.forward();
+    _onCountDownFinish(seconds: seconds);
+  }
+
+  void _onCountDownFinish({int seconds}) async {
+    await Future.delayed(Duration(seconds: seconds - 1));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
   }
 }
