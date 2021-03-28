@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/Backend/games_finished.dart';
 import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/guess_widgets.dart';
 
@@ -20,6 +21,7 @@ class _streak_gui_state extends State<streak_gui>
   streak_count _counter = new streak_count();
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
+  int lastcount = 99;
   var counter;
 
   void _start() async {
@@ -61,8 +63,9 @@ class _streak_gui_state extends State<streak_gui>
               length: 6,
             )),
             guess_textfield(
-                incrementedCounter: incrementedCounter,
-                textEditingController: _textEditingController),
+              incrementedCounter: incrementedCounter,
+              textEditingController: _textEditingController,
+            ),
             Container(
               child: Image.network(
                 randomPic.URL,
@@ -88,6 +91,11 @@ class _streak_gui_state extends State<streak_gui>
 
   void _onCountDownFinish({int seconds}) async {
     await Future.delayed(Duration(seconds: seconds - 1));
+    if (lastcount == streak_count.count) {
+      games_finished().streak(streak_count.count);
+    } else {
+      lastcount = streak_count.count;
+    }
     _controller.dispose();
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));

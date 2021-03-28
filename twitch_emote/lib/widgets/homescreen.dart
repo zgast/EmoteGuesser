@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/buttons.dart';
+import 'package:twitch_emote/widgets/streak%20_gui.dart';
 
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/no_connection.dart';
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/streak%20_gui.dart';
@@ -19,7 +20,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  streak_count _counter = new streak_count();
+  streak_count _counter = new streak_count()
   void _start() async {
     if (!(await check().checkConnection())) {
       Navigator.of(context).pushReplacement(
