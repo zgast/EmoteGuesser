@@ -2,23 +2,23 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/Backend/games_finished.dart';
 import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/guess_widgets.dart';
+import 'package:twitch_emote/helper/guesser_counter.dart';
 
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
 
 import '../helper/check.dart';
 import 'no_connection.dart';
 
-class streak_gui extends StatefulWidget {
+class StreakGUI extends StatefulWidget {
   @override
-  _streak_gui_state createState() => _streak_gui_state();
+  StreakGUIState createState() => StreakGUIState();
 }
 
-class _streak_gui_state extends State<streak_gui>
+class StreakGUIState extends State<StreakGUI>
     with SingleTickerProviderStateMixin {
-  streak_count _counter = new streak_count();
+  var _counter = new guessed_counter();
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   int lastcount = 99;
@@ -37,7 +37,7 @@ class _streak_gui_state extends State<streak_gui>
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => streak_gui(),
+        pageBuilder: (_, __, ___) => StreakGUI(),
         transitionDuration: Duration(seconds: 0),
       ),
     );
@@ -91,26 +91,8 @@ class _streak_gui_state extends State<streak_gui>
 
   void _onCountDownFinish({int seconds}) async {
     await Future.delayed(Duration(seconds: seconds - 1));
-    if (lastcount == streak_count.count) {
-      games_finished().streak(streak_count.count);
-    } else {
-      lastcount = streak_count.count;
-    }
     _controller.dispose();
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
-  }
-}
-
-class streak_count implements Function {
-  static var count = 0;
-
-  call(bool plus, bool reset) {
-    if (plus) {
-      count++;
-    } else if (reset) {
-      count = 0;
-    }
-    return count;
   }
 }

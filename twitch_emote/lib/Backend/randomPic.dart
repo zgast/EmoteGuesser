@@ -18,6 +18,7 @@ class randomPic {
             'usahd9720hd23807d23g2h8ofbgv24876fv24809fb2480fbn0ofhb<o83rg32ad78ashd8co89awhf9ofhaloifhf789obvaoisdzbvösadcvbasipf',
       }),
     );
+
     Picture picture = Picture.fromJson(jsonDecode(response.body));
     name = picture.name;
     URL = picture.URL;

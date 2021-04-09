@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/guess_widgets.dart';
+import 'package:twitch_emote/helper/guesser_counter.dart';
 
 import '../helper/check.dart';
 import 'homescreen.dart';
@@ -19,7 +20,7 @@ class _GuessGUIState extends State<GuessGUI>
   static String URL = randomPic.URL;
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
-  int counter = 0;
+  var counter = new guessed_counter();
   var stringCounter;
 
   void _checkConnection() async {
@@ -32,8 +33,8 @@ class _GuessGUIState extends State<GuessGUI>
   void nextStep() async {
     await randomPic().get();
     setState(() {
-      counter++;
-      stringCounter = counter.toString().padLeft(2, '0');
+      counter(true, false);
+      stringCounter = guessed_counter.count.toString().padLeft(2, '0');
     });
     setState(() {
       URL = randomPic.URL;
@@ -42,7 +43,7 @@ class _GuessGUIState extends State<GuessGUI>
 
   @override
   Widget build(BuildContext context) {
-    stringCounter = counter.toString().padLeft(2, '0');
+    stringCounter = guessed_counter.count.toString().padLeft(2, '0');
     _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,

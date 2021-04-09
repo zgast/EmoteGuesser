@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twitch_emote/Backend/games_finished.dart';
 import 'package:twitch_emote/Backend/randomPic.dart';
 import 'package:twitch_emote/GUI/buttons.dart';
-import 'package:twitch_emote/widgets/streak%20_gui.dart';
+import 'package:twitch_emote/helper/guesser_counter.dart';
+import 'package:twitch_emote/widgets/stats.dart';
+import 'package:twitch_emote/widgets/streak_gui.dart';
 
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/no_connection.dart';
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/streak%20_gui.dart';
 import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/time_gui.dart';
 
 import '../helper/check.dart';
@@ -20,18 +22,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  streak_count _counter = new streak_count()
+  static String _game = "null";
+  var _counter = new guessed_counter();
   void _start() async {
     if (!(await check().checkConnection())) {
+      _game = "null";
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => no_connection_GUI()));
     }
     await randomPic().get();
   }
 
+  void _stats() async {
+    if (_game != "null") {
+      games_finished().post(guessed_counter.count, _game);
+    }
+    _counter(false, true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    _counter(false, true);
+    _stats();
     _start();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -50,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             MenuButton(
               name: "TIME GAME",
               onPressed: () {
+                _game = "time";
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (_) => GuessGUI()));
               },
@@ -57,13 +69,18 @@ class _MyHomePageState extends State<MyHomePage> {
             MenuButton(
               name: "STREAK GAME",
               onPressed: () {
+                _game = "streak";
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => streak_gui()));
+                    MaterialPageRoute(builder: (_) => StreakGUI()));
               },
             ),
             MenuButton(
               name: "STATS",
-              onPressed: () {},
+              onPressed: () {
+                _game = "null";
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => StatsPage()));
+              },
             )
           ],
         ),
