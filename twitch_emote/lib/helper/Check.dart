@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:twitch_emote/Backend/randomPic.dart';
+import 'package:twitch_emote/Backend/RandomPic.dart';
 
-class check {
+class Check {
   bool isEqual(String text) {
     if (randomPic.name.toLowerCase() == text.toLowerCase()) {
       return true;

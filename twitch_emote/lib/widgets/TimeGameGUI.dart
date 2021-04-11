@@ -2,31 +2,31 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/Backend/randomPic.dart';
-import 'package:twitch_emote/GUI/guess_widgets.dart';
-import 'package:twitch_emote/helper/guesser_counter.dart';
+import 'package:twitch_emote/Backend/RandomPic.dart';
+import 'package:twitch_emote/GUI/GuessWidgets.dart';
+import 'package:twitch_emote/helper/GuesserCounter.dart';
 
-import '../helper/check.dart';
-import 'homescreen.dart';
-import 'no_connection.dart';
+import '../helper/Check.dart';
+import 'HomescreenGUI.dart';
+import 'NoConnectionGUI.dart';
 
-class GuessGUI extends StatefulWidget {
+class TimeGameGUI extends StatefulWidget {
   @override
-  _GuessGUIState createState() => _GuessGUIState();
+  _TimeGameGUIState createState() => _TimeGameGUIState();
 }
 
-class _GuessGUIState extends State<GuessGUI>
+class _TimeGameGUIState extends State<TimeGameGUI>
     with SingleTickerProviderStateMixin {
   static String URL = randomPic.URL;
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
-  var counter = new guessed_counter();
+  var counter = new guesserCounter();
   var stringCounter;
 
   void _checkConnection() async {
-    if (!(await check().checkConnection())) {
+    if (!(await Check().checkConnection())) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => no_connection_GUI()));
+          MaterialPageRoute(builder: (_) => NoConnectionGUI()));
     }
   }
 
@@ -34,7 +34,7 @@ class _GuessGUIState extends State<GuessGUI>
     await randomPic().get();
     setState(() {
       counter(true, false);
-      stringCounter = guessed_counter.count.toString().padLeft(2, '0');
+      stringCounter = guesserCounter.count.toString().padLeft(2, '0');
     });
     setState(() {
       URL = randomPic.URL;
@@ -43,7 +43,7 @@ class _GuessGUIState extends State<GuessGUI>
 
   @override
   Widget build(BuildContext context) {
-    stringCounter = guessed_counter.count.toString().padLeft(2, '0');
+    stringCounter = guesserCounter.count.toString().padLeft(2, '0');
     _checkConnection();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,7 +60,7 @@ class _GuessGUIState extends State<GuessGUI>
                 length: 20,
               ),
             ),
-            guess_textfield(
+            GuessTextField(
                 incrementedCounter: nextStep,
                 textEditingController: _textEditingController),
             Container(
@@ -91,6 +91,6 @@ class _GuessGUIState extends State<GuessGUI>
   void _onCountDownFinish({int seconds}) async {
     await Future.delayed(Duration(seconds: seconds - 1));
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
+        .pushReplacement(MaterialPageRoute(builder: (_) => HomescreenGUI()));
   }
 }

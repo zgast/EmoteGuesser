@@ -2,40 +2,46 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/Backend/games_finished.dart';
-import 'package:twitch_emote/Backend/randomPic.dart';
-import 'package:twitch_emote/GUI/buttons.dart';
-import 'package:twitch_emote/helper/guesser_counter.dart';
-import 'package:twitch_emote/widgets/stats.dart';
-import 'package:twitch_emote/widgets/streak_gui.dart';
+import 'package:twitch_emote/Backend/GamesFinished.dart';
+import 'package:twitch_emote/Backend/RandomPic.dart';
+import 'package:twitch_emote/GUI/Buttons.dart';
+import 'package:twitch_emote/helper/GuesserCounter.dart';
+import 'package:twitch_emote/helper/SaveManagment.dart';
+import 'package:twitch_emote/widgets/LoginGUI.dart';
+import 'package:twitch_emote/widgets/NoConnectionGUI.dart';
+import 'package:twitch_emote/widgets/StatsGUI.dart';
+import 'package:twitch_emote/widgets/StreakGUI.dart';
+import 'package:twitch_emote/widgets/TimeGameGUI.dart';
 
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/no_connection.dart';
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/time_gui.dart';
+import '../helper/Check.dart';
 
-import '../helper/check.dart';
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomescreenGUI extends StatefulWidget {
+  HomescreenGUI({Key key, this.title}) : super(key: key);
   final String title;
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomescreenGUIState createState() => _HomescreenGUIState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomescreenGUIState extends State<HomescreenGUI> {
   static String _game = "null";
-  var _counter = new guessed_counter();
+  var _counter = new guesserCounter();
   void _start() async {
-    if (!(await check().checkConnection())) {
+    if (!(await SaveManagment().load())) {
+      _game = "null";
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => LoginGUI()));
+    }
+    if (!(await Check().checkConnection())) {
       _game = "null";
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => no_connection_GUI()));
+          MaterialPageRoute(builder: (_) => NoConnectionGUI()));
     }
     await randomPic().get();
   }
 
   void _stats() async {
     if (_game != "null") {
-      games_finished().post(guessed_counter.count, _game);
+      gamesFinished().post(guesserCounter.count, _game);
     }
     _counter(false, true);
   }
@@ -63,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 _game = "time";
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => GuessGUI()));
+                    MaterialPageRoute(builder: (_) => TimeGameGUI()));
               },
             ),
             MenuButton(
@@ -79,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 _game = "null";
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => StatsPage()));
+                    MaterialPageRoute(builder: (_) => StatsGUI()));
               },
             )
           ],

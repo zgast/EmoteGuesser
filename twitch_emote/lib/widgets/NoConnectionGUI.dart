@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/GUI/buttons.dart';
-import 'package:twitch_emote/helper/check.dart';
+import 'package:twitch_emote/GUI/Buttons.dart';
+import 'package:twitch_emote/helper/Check.dart';
+import 'package:twitch_emote/widgets/HomescreenGUI.dart';
 
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
-
-class no_connection_GUI extends StatefulWidget {
+class NoConnectionGUI extends StatefulWidget {
   @override
-  _no_connection_GUIState createState() => _no_connection_GUIState();
+  _NoConnectionGUIState createState() => _NoConnectionGUIState();
 }
 
-class _no_connection_GUIState extends State<no_connection_GUI> {
+class _NoConnectionGUIState extends State<NoConnectionGUI> {
   void _checkConnection() async {
-    if (!(await check().checkConnection())) {
+    if (!(await Check().checkConnection())) {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => HomescreenGUI()));
     }
   }
 

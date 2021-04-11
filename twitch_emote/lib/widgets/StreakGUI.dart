@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/Backend/randomPic.dart';
-import 'package:twitch_emote/GUI/guess_widgets.dart';
-import 'package:twitch_emote/helper/guesser_counter.dart';
+import 'package:twitch_emote/Backend/RandomPic.dart';
+import 'package:twitch_emote/GUI/GuessWidgets.dart';
+import 'package:twitch_emote/helper/GuesserCounter.dart';
+import 'package:twitch_emote/widgets/HomescreenGUI.dart';
 
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
-
-import '../helper/check.dart';
-import 'no_connection.dart';
+import '../helper/Check.dart';
+import 'NoConnectionGUI.dart';
 
 class StreakGUI extends StatefulWidget {
   @override
@@ -18,16 +17,16 @@ class StreakGUI extends StatefulWidget {
 
 class StreakGUIState extends State<StreakGUI>
     with SingleTickerProviderStateMixin {
-  var _counter = new guessed_counter();
+  var _counter = new guesserCounter();
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   int lastcount = 99;
   var counter;
 
   void _start() async {
-    if (!(await check().checkConnection())) {
+    if (!(await Check().checkConnection())) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => no_connection_GUI()));
+          MaterialPageRoute(builder: (_) => NoConnectionGUI()));
     }
   }
 
@@ -62,7 +61,7 @@ class StreakGUIState extends State<StreakGUI>
               counter: counter,
               length: 6,
             )),
-            guess_textfield(
+            GuessTextField(
               incrementedCounter: incrementedCounter,
               textEditingController: _textEditingController,
             ),
@@ -93,6 +92,6 @@ class StreakGUIState extends State<StreakGUI>
     await Future.delayed(Duration(seconds: seconds - 1));
     _controller.dispose();
     Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => MyHomePage()));
+        .pushReplacement(MaterialPageRoute(builder: (_) => HomescreenGUI()));
   }
 }

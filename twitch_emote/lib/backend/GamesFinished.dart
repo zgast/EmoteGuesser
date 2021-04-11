@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:twitch_emote/objects/User.dart';
 
-class games_finished {
+class gamesFinished {
   void post(int count, String game) async {
+    String name = User.name;
+    String ID = User.ID;
     String URL;
     if (game == "time") {
       URL = "http://10.0.2.2:8080/EmoteGuesser/game/time/add";
@@ -19,8 +22,8 @@ class games_finished {
         'key':
             'usahd9720hd23807d23g2h8ofbgv24876fv24809fb2480fbn0ofhb<o83rg32ad78ashd8co89awhf9ofhaloifhf789obvaoisdzbvösadcvbasipf',
         'guessed': "$count",
-        'username': 'admin',
-        'userID': "0001",
+        'username': "$name",
+        'userID': "$ID",
       }),
     );
   }

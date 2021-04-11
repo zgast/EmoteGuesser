@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/button_theme.dart';
-
-import 'file:///C:/Users/Markus/Documents/GitHub/EmoteGuesser/twitch_emote/lib/widgets/homescreen.dart';
+import 'package:twitch_emote/widgets/HomescreenGUI.dart';
 
 void main() async {
   runApp(MyApp());
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         ),
         buttonColor: Colors.deepPurple,
       ),
-      home: MyHomePage(title: 'Twitch Emote Guesser'),
+      home: HomescreenGUI(title: 'Twitch Emote Guesser'),
     );
   }
 }

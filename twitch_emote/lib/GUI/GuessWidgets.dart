@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/helper/check.dart';
-import 'package:twitch_emote/helper/stop_watch.dart';
+import 'package:twitch_emote/helper/Check.dart';
+import 'package:twitch_emote/helper/Countdown.dart';
 
 class counter_timer extends StatelessWidget {
   final String counter;
@@ -41,11 +41,11 @@ class counter_timer extends StatelessWidget {
   }
 }
 
-class guess_textfield extends StatelessWidget {
+class GuessTextField extends StatelessWidget {
   final TextEditingController textEditingController;
   final VoidCallback incrementedCounter;
 
-  guess_textfield(
+  GuessTextField(
       {@required this.incrementedCounter,
       @required this.textEditingController});
 
@@ -57,7 +57,7 @@ class guess_textfield extends StatelessWidget {
       child: TextField(
         controller: textEditingController,
         onChanged: (text) {
-          if (check().isEqual(text)) {
+          if (Check().isEqual(text)) {
             textEditingController.clear();
             incrementedCounter();
           }
