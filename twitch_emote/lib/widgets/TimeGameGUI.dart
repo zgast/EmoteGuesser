@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitch_emote/Backend/RandomPic.dart';
@@ -18,12 +17,14 @@ class TimeGameGUI extends StatefulWidget {
 class _TimeGameGUIState extends State<TimeGameGUI>
     with SingleTickerProviderStateMixin {
   static String URL = randomPic.URL;
+  String name = randomPic.name;
   TextEditingController _textEditingController = new TextEditingController();
   AnimationController _controller;
   var counter = new guesserCounter();
   var stringCounter;
 
   void _checkConnection() async {
+    URL = randomPic.URL;
     if (!(await Check().checkConnection())) {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => NoConnectionGUI()));
@@ -64,8 +65,8 @@ class _TimeGameGUIState extends State<TimeGameGUI>
                 incrementedCounter: nextStep,
                 textEditingController: _textEditingController),
             Container(
-              child: Image.network(
-                URL,
+              child: CachedNetworkImage(
+                imageUrl: URL,
                 key: ValueKey(URL),
                 width: 300,
                 height: 300,

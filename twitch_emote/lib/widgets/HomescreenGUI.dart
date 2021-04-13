@@ -23,13 +23,17 @@ class HomescreenGUI extends StatefulWidget {
 }
 
 class _HomescreenGUIState extends State<HomescreenGUI> {
+  static bool inLogin = false;
   static String _game = "null";
   var _counter = new guesserCounter();
   void _start() async {
     if (!(await SaveManagment().load())) {
       _game = "null";
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => LoginGUI()));
+      if (!inLogin) {
+        inLogin = true;
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (_) => LoginGUI()));
+      }
     }
     if (!(await Check().checkConnection())) {
       _game = "null";

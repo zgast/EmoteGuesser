@@ -9,7 +9,7 @@
     <application
         android:usesCleartextTraffic="true"
         android:name="io.flutter.app.FlutterApplication"
-        android:label="twitch_emote"
+        android:label="EmoteGuesser"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
