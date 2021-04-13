@@ -17,6 +17,7 @@ A apk runable machine
 
 ### How to use it
 - Download the .apk in the release
+- https://github.com/zgast/EmoteGuesser/releases/tag/0.1
 - execute it
 
 ## What I learned💡
