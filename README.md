@@ -5,10 +5,9 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/zgast/EmoteGuesser)
 ![GitHub last commit](https://img.shields.io/github/last-commit/zgast/EmoteGuesser)
 ![GitHub issues](https://img.shields.io/github/issues-raw/zgast/EmoteGuesser)
-![GitHub all releases](https://img.shields.io/github/downloads/zgast/EmoteGuesser/total)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zgast/EmoteGuesser)
-![GitHub language count](https://img.shields.io/github/languages/count/zgast/EmoteGuesser)
-A app to guess twitch emotes
+![GitHub language count](https://img.shields.io/github/languages/count/zgast/EmoteGuesser)  
+ 
 ## Features💻
 - stats
 - 2 play modes
