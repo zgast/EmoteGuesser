@@ -23,3 +23,5 @@ A apk runable machine
 ## What I learned💡
 - Flutter
 
+## Assets
+- Logo by ![Toby](https://github.com/tobyguelly)
