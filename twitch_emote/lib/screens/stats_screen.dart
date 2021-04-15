@@ -25,8 +25,9 @@ class _StatsScreenState extends State<StatsScreen> {
 
   _initScreen() async {
     context.read<AppState>().checkConnection();
-    var stats = await ApiWrapper.instance
-        .getUserStats(context.read<AppState>().loggedInUser);
+    var user = context.read<AppState>().loggedInUser;
+    _username = user.name;
+    var stats = await ApiWrapper.instance.getUserStats(user);
 
     // Can't call setState before first build --> Add PostFrameCallback
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -62,7 +63,7 @@ class _StatsScreenState extends State<StatsScreen> {
             ),
             Container(
               child: Text(
-                "Stats from $_username :\n",
+                "Stats for $_username:\n",
                 textScaleFactor: 2,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),

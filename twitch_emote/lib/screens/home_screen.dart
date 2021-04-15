@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     name: "STREAK GAME",
                     onPressed: () {
                       context.read<GameState>().type = GameType.STREAK;
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      Navigator.of(context).push(MaterialPageRoute(
                           builder: (_) => GameScreen(type: GameType.STREAK)));
                     },
                   ),

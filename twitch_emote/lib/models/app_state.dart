@@ -49,6 +49,7 @@ class AppState extends ChangeNotifier {
         return false;
       }
       _loggedInUser = u;
+      SaveManagment.saveUser(u);
     } catch (e) {
       return false;
     }

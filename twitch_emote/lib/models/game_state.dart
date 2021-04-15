@@ -8,8 +8,8 @@ import 'package:twitch_emote/models/game_type.dart';
 
 import 'package:quiver/async.dart';
 
-const timeGameLength = Duration(seconds: 20);
-const streakLengthPerImage = Duration(seconds: 6);
+const timeGameLength = Duration(seconds: 22);
+const streakLengthPerImage = Duration(seconds: 8);
 
 const increment = Duration(seconds: 1);
 
@@ -30,8 +30,7 @@ class GameState with ChangeNotifier {
     notifyListeners();
   }
 
-  bool _loading = true;
-  bool get loading => _loading;
+  bool loading = true;
 
   int _streakLength = 0;
   int get streakLength => _streakLength;
@@ -42,11 +41,11 @@ class GameState with ChangeNotifier {
 
   getNewImage() async {
     _currentPic = null;
-    _loading = true;
+    loading = true;
     notifyListeners();
     var pic = await ApiWrapper.instance.getRandomPic();
     _currentPic = pic;
-    _loading = false;
+    loading = false;
     notifyListeners();
   }
 
@@ -74,8 +73,13 @@ class GameState with ChangeNotifier {
 
   resetGame() {
     ApiWrapper.instance.finishGame(_streakLength, type, _appState.loggedInUser);
-    if (_countDownSubscription != null) _countDownSubscription.cancel();
-    if (_timer != null) _timer.cancel();
+    try {
+      if (_countDownSubscription != null) _countDownSubscription.cancel();
+      if (_timer != null) _timer.cancel();
+    } catch (e) {
+      // Timer was already cancelled
+    }
+    _remainingSeconds = 0;
     _streakLength = 0;
     type = GameType.NONE;
     getNewImage();
@@ -86,12 +90,13 @@ class GameState with ChangeNotifier {
 
   VoidCallback _onFinish;
 
+  // Just the number for the UI, does not get used to check anything
   int _remainingSeconds = 0;
   int get remainingSeconds => _remainingSeconds;
 
-  startGame(GameType type, {VoidCallback onFinish}) {
+  startGame(GameType type, {VoidCallback onFinish}) async {
     _type = type;
-    getNewImage();
+    await getNewImage();
     Duration gameLength;
     if (type == GameType.TIME)
       gameLength = timeGameLength;
@@ -107,12 +112,16 @@ class GameState with ChangeNotifier {
     _countDownSubscription.onData((data) {
       _remainingSeconds = data.remaining.inSeconds;
       notifyListeners();
+
+      // Not using the callback function _countDownSubscription.onDone to
+      // be able to stop and restart a new timer, since _countDownSubscription.onDone
+      // is called, whenever you cancel the timer by hand...
+      if (data.remaining.inSeconds == 0) {
+        onFinish?.call();
+        resetGame();
+      }
     });
 
     _onFinish = onFinish;
-    _countDownSubscription.onDone(() {
-      onFinish?.call();
-      resetGame();
-    });
   }
 }

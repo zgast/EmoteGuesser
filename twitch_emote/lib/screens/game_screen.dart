@@ -22,45 +22,58 @@ class _GameScreenState extends State<GameScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: Text("Twitch Emote Guesser"),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              child: CounterWithTimer(),
-            ),
-            GuessTextField(textEditingController: _textEditingController),
-            context.watch<GameState>().loading
-                ? Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : Container(
-                    child: CachedNetworkImage(
-                      imageUrl: context.watch<GameState>().currentPic.url,
-                      key: ValueKey(context.watch<GameState>().currentPic.url),
-                      width: 300,
-                      height: 300,
-                    ),
-                  )
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Catch Pop Event, because calling resetGame in the dispose Method is unsafe
+        context.read<GameState>().resetGame();
+        return true;
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text("Twitch Emote Guesser"),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                child: CounterWithTimer(),
+              ),
+              GuessTextField(textEditingController: _textEditingController),
+              context.watch<GameState>().loading
+                  ? Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Container(
+                      child: CachedNetworkImage(
+                        imageUrl: context.watch<GameState>().currentPic.url,
+                        key:
+                            ValueKey(context.watch<GameState>().currentPic.url),
+                        width: 300,
+                        height: 300,
+                      ),
+                    )
+            ],
+          ),
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   @override
   void initState() {
     context.read<AppState>().checkConnection();
-    context.read<GameState>().startGame(widget.type, onFinish: () {
-      Navigator.popUntil(context, (route) => route.isFirst);
+    context.read<GameState>().loading = true;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<GameState>().startGame(widget.type, onFinish: () {
+        if (mounted) {
+          Navigator.popUntil(context, (route) => route.isFirst);
+        }
+      });
     });
+
     super.initState();
   }
 }
