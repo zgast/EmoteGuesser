@@ -16,7 +16,7 @@ class User {
   }
 
   static const idKey = 'userID';
-  static const nameKey = 'name';
+  static const nameKey = 'username';
   static const tokenKey = 'token';
   factory User.fromSavedPreferences(SharedPreferences prefs) {
     String id = prefs.getString(idKey);
