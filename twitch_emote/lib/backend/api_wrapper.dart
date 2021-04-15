@@ -77,9 +77,7 @@ class ApiWrapper {
       }),
     );
 
-    print(response.statusCode);
-
-    print(response.body);
+    if (response.statusCode == 500) return null;
     Map<String, dynamic> json = jsonDecode(response.body);
     User user = User.fromJson(json);
     await SaveManagment.saveUser(user);

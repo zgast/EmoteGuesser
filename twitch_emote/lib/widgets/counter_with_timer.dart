@@ -25,7 +25,7 @@ class CounterWithTimer extends StatelessWidget {
             margin: new EdgeInsets.only(top: 30, right: 50, left: 190),
             alignment: Alignment.topLeft,
             child: Text(
-              "${context.watch<GameState>().remainingSeconds}s",
+              "${context.watch<GameState>().remainingSeconds}s".padLeft(3, '0'),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             )),
       ],

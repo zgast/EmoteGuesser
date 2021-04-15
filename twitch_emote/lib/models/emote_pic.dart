@@ -5,7 +5,7 @@ class EmotePic {
   const EmotePic(this.name, this.url);
 
   bool checkName(String input) {
-    if (name.toLowerCase() == input) return true;
+    if (name.toLowerCase() == input.toLowerCase()) return true;
     return false;
   }
 

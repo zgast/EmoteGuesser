@@ -3,6 +3,7 @@ import 'package:twitch_emote/models/user.dart';
 
 class SaveManagment {
   static saveUser(User user) async {
+    if (user == null) return;
     final prefs = await SharedPreferences.getInstance();
     user.saveToSharedPreferences(prefs);
   }
