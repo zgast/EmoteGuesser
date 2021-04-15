@@ -2,36 +2,61 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/GUI/Buttons.dart';
-import 'package:twitch_emote/backend/Login.dart';
-import 'package:twitch_emote/widgets/NoConnectionGUI.dart';
+import 'package:twitch_emote/models/app_state.dart';
+import 'package:twitch_emote/widgets/menu_button.dart';
+import 'package:provider/provider.dart';
 
-import '../helper/Check.dart';
-import 'HomescreenGUI.dart';
-
-class LoginGUI extends StatefulWidget {
-  LoginGUI({Key key, this.title}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key key, this.title}) : super(key: key);
   final String title;
   @override
-  _LoginGUIState createState() => _LoginGUIState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginGUIState extends State<LoginGUI> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _textEditingController = new TextEditingController();
-  void _start() async {
-    if (!(await Check().checkConnection())) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => NoConnectionGUI()));
-    }
+
+  bool loading = true;
+
+  @override
+  void initState() {
+    // Adding frame callback, because we can't use setState before first build has finished
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (await context.read<AppState>().checkConnection()) {
+        setState(() {
+          loading = false;
+        });
+      }
+    });
+    super.initState();
   }
 
   void _login(String text) async {
-    Login().newUser(text);
+    setState(() {
+      loading = true;
+    });
+
+    var success = await context.read<AppState>().register(text);
+    if (!success) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to log you in ):')));
+      setState(() {
+        loading = false;
+      });
+    }
+    if (mounted) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _start();
+    /// Never call a function you don't want to be executed at any time in the
+    /// build method. If you want to execute something on the first Widget launch
+    /// use `initState`
+    // _start();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -67,10 +92,11 @@ class _LoginGUIState extends State<LoginGUI> {
             ),
             MenuButton(
               name: "CONTINUE",
+              activated: !loading,
               onPressed: () {
-                _login(_textEditingController.text);
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => HomescreenGUI()));
+                if (!loading) {
+                  _login(_textEditingController.text);
+                }
               },
             )
           ],

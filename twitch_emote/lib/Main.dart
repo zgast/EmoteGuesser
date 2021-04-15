@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/button_theme.dart';
-import 'package:twitch_emote/widgets/HomescreenGUI.dart';
+import 'package:provider/provider.dart';
+import 'package:twitch_emote/models/app_state.dart';
+import 'package:twitch_emote/models/game_state.dart';
+import 'package:twitch_emote/screens/home_screen.dart';
 
-void main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final AppState appState = AppState();
+
   @override
   build(BuildContext context) {
     return MaterialApp(
@@ -21,7 +26,13 @@ class MyApp extends StatelessWidget {
         ),
         buttonColor: Colors.deepPurple,
       ),
-      home: HomescreenGUI(title: 'Twitch Emote Guesser'),
+      home: ChangeNotifierProvider<AppState>(
+        create: (_) => appState,
+        child: ChangeNotifierProvider<GameState>(
+          create: (_) => GameState(appState),
+          child: HomeScreen(title: 'Twitch Emote Guesser'),
+        ),
+      ),
     );
   }
 }

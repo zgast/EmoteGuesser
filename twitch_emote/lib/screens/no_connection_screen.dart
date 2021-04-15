@@ -1,19 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/GUI/Buttons.dart';
-import 'package:twitch_emote/helper/Check.dart';
-import 'package:twitch_emote/widgets/HomescreenGUI.dart';
+import 'package:twitch_emote/models/app_state.dart';
+import 'package:twitch_emote/widgets/menu_button.dart';
 
-class NoConnectionGUI extends StatefulWidget {
+import 'package:provider/provider.dart';
+
+class NoConnectionScreen extends StatefulWidget {
   @override
-  _NoConnectionGUIState createState() => _NoConnectionGUIState();
+  _NoConnectionScreenState createState() => _NoConnectionScreenState();
 }
 
-class _NoConnectionGUIState extends State<NoConnectionGUI> {
+class _NoConnectionScreenState extends State<NoConnectionScreen> {
+  bool checking = false;
+
   void _checkConnection() async {
-    if (!(await Check().checkConnection())) {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => HomescreenGUI()));
+    setState(() {
+      checking = true;
+    });
+    await context.read<AppState>().checkConnection();
+    // mounted checks if widget is even displayed anymore
+    if (mounted) {
+      setState(() {
+        checking = false;
+      });
     }
   }
 
@@ -37,6 +46,7 @@ class _NoConnectionGUIState extends State<NoConnectionGUI> {
             Container(
               margin: new EdgeInsets.only(top: 200, bottom: 40),
               child: MenuButton(
+                activated: !checking,
                 onPressed: () {
                   _checkConnection();
                 },
