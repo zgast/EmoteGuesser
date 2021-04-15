@@ -29,6 +29,11 @@ dependencies:
   cached_network_image: ^3.0.0
   cupertino_icons: ^1.0.0
 
+  # State management
+  provider: ^5.0.0
+  # Good Countdown
+  quiver: ^3.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
