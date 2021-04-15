@@ -22,12 +22,12 @@ class ApiWrapper {
     switch (game) {
       case GameType.TIME:
         {
-          uri = Uri.parse('$baseUrl/game/time/add');
+          uri = Uri.parse('$baseUrl/game/time/add/');
           break;
         }
       case GameType.STREAK:
         {
-          uri = Uri.parse('$baseUrl/game/streak/add');
+          uri = Uri.parse('$baseUrl/game/streak/add/');
           break;
         }
       case GameType.NONE:
