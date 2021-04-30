@@ -24,10 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.0
-  shared_preferences: ^0.4.3
+  shared_preferences: 2.0.5
   flutter_cache_manager: ^3.0.1
   cached_network_image: ^3.0.0
   cupertino_icons: ^1.0.0
+
 
   # State management
   provider: ^5.0.0

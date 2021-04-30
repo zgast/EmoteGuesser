@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/models/app_state.dart';
-
 import 'package:provider/provider.dart';
+import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/models/game_state.dart';
 import 'package:twitch_emote/models/game_type.dart';
 import 'package:twitch_emote/widgets/counter_with_timer.dart';

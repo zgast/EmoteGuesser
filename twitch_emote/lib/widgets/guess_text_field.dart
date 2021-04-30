@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twitch_emote/models/game_state.dart';
-
 import 'package:provider/provider.dart';
+import 'package:twitch_emote/models/game_state.dart';
 
 class GuessTextField extends StatelessWidget {
   final TextEditingController textEditingController;
@@ -15,6 +14,7 @@ class GuessTextField extends StatelessWidget {
       margin: new EdgeInsets.only(bottom: 50, top: 50),
       child: TextField(
         controller: textEditingController,
+        enableSuggestions: false,
         onChanged: (text) async {
           if (await context.read<GameState>().checkInput(text)) {
             textEditingController.clear();

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twitch_emote/backend/api_wrapper.dart';
 import 'package:twitch_emote/models/app_state.dart';
-
-import 'package:provider/provider.dart';
-import 'package:twitch_emote/widgets/menu_button.dart';
+import 'package:twitch_emote/widgets/logo_widget.dart';
 
 class StatsScreen extends StatefulWidget {
   StatsScreen({Key key, this.title}) : super(key: key);
@@ -53,14 +52,7 @@ class _StatsScreenState extends State<StatsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              margin: new EdgeInsets.only(bottom: 30),
-              child: Image.network(
-                'https://data.zgast.at/EmoteGuesser/Transparent_Icon.png',
-                width: 200,
-                height: 200,
-              ),
-            ),
+            LogoWidget(),
             Container(
               child: Text(
                 "Stats for $_username:\n",
@@ -80,12 +72,6 @@ class _StatsScreenState extends State<StatsScreen> {
                 textScaleFactor: 2,
               ),
             ),
-            MenuButton(
-              name: "BACK",
-              onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              },
-            )
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.

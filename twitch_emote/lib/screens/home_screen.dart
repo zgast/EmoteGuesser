@@ -1,17 +1,12 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
-import 'package:twitch_emote/models/game_state.dart';
-import 'package:twitch_emote/models/game_type.dart';
-import 'package:twitch_emote/screens/game_screen.dart';
+import 'package:twitch_emote/screens/game_menu_screen.dart';
 import 'package:twitch_emote/screens/login_screen.dart';
 import 'package:twitch_emote/screens/no_connection_screen.dart';
+import 'package:twitch_emote/screens/settings_screen.dart';
 import 'package:twitch_emote/screens/stats_screen.dart';
-import 'package:twitch_emote/widgets/menu_button.dart';
-
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -21,9 +16,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _currentIndex = 0;
+
+  List<Widget> widgets = [GameMenuScreen(), StatsScreen(), SettingsScreen()];
   @override
   Widget build(BuildContext context) {
     var homeState = context.watch<AppState>().homeState;
+
     switch (homeState) {
       case HomeState.LOADING:
         {
@@ -45,46 +44,31 @@ class _HomeScreenState extends State<HomeScreen> {
         {
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    margin: new EdgeInsets.only(bottom: 30),
-                    child: Image.network(
-                      'https://data.zgast.at/EmoteGuesser/Transparent_Icon.png',
-                      width: 200,
-                      height: 200,
-                    ),
-                  ),
-                  MenuButton(
-                    name: "TIME GAME",
-                    onPressed: () {
-                      context.read<GameState>().type = GameType.TIME;
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => GameScreen(type: GameType.TIME)));
-                    },
-                  ),
-                  MenuButton(
-                    name: "STREAK GAME",
-                    onPressed: () {
-                      context.read<GameState>().type = GameType.STREAK;
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => GameScreen(type: GameType.STREAK)));
-                    },
-                  ),
-                  MenuButton(
-                    name: "STATS",
-                    onPressed: () {
-                      context.read<GameState>().type = GameType.NONE;
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => StatsScreen()));
-                    },
-                  )
-                ],
-              ),
-            ), // This trailing comma makes auto-formatting nicer for build methods.
-          );
+            body: widgets[_currentIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.sports_esports),
+                  label: 'GAMES',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.perm_identity),
+                  label: 'ACCOUNT',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: 'SETTINGS',
+                ),
+              ],
+              currentIndex: _currentIndex,
+              selectedItemColor: Colors.deepPurple,
+              onTap: (newindex) {
+                setState(() {
+                  _currentIndex = newindex;
+                });
+              },
+            ),
+          ); // This trailing comma makes auto-formatting nicer for build methods.
         }
     }
     return Container();
