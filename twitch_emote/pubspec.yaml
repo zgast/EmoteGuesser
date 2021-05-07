@@ -23,11 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^0.13.0
-  shared_preferences: 2.0.5
-  flutter_cache_manager: ^3.0.1
-  cached_network_image: ^3.0.0
-  cupertino_icons: ^1.0.0
+  http:
+  shared_preferences:
+  flutter_cache_manager:
+  cached_network_image:
+  cupertino_icons:
+  settings_ui:
+  url_launcher:
 
 
   # State management
