@@ -6,7 +6,8 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/zgast/EmoteGuesser)
 ![GitHub issues](https://img.shields.io/github/issues-raw/zgast/EmoteGuesser)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/zgast/EmoteGuesser)
-![GitHub language count](https://img.shields.io/github/languages/count/zgast/EmoteGuesser)  
+![GitHub language count](https://img.shields.io/github/languages/count/zgast/EmoteGuesser)
+![views](https://visitor-badge.glitch.me/badge?page_id=zgast.EmoteGuesser)
  
 ## Features💻
 - stats
