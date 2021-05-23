@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/screens/game_menu_screen.dart';
-import 'package:twitch_emote/screens/login_screen.dart';
 import 'package:twitch_emote/screens/no_connection_screen.dart';
 import 'package:twitch_emote/screens/settings_screen.dart';
 import 'package:twitch_emote/screens/stats_screen.dart';
+
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);

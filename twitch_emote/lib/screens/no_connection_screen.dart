@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/widgets/menu_button.dart';
-
-import 'package:provider/provider.dart';
 
 class NoConnectionScreen extends StatefulWidget {
   @override
@@ -35,7 +35,9 @@ class _NoConnectionScreenState extends State<NoConnectionScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              margin: new EdgeInsets.only(top: 300),
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 450, top: 300),
               child: Text(
                 'Sry, no network connection!',
                 textAlign: TextAlign.center,
@@ -44,7 +46,7 @@ class _NoConnectionScreenState extends State<NoConnectionScreen> {
               ),
             ),
             Container(
-              margin: new EdgeInsets.only(top: 200, bottom: 40),
+              alignment: Alignment.bottomCenter,
               child: MenuButton(
                 activated: !checking,
                 onPressed: () {
