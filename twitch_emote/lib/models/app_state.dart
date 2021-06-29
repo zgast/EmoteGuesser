@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:twitch_emote/backend/api_wrapper.dart';
 import 'package:twitch_emote/helper/check.dart';
 import 'package:twitch_emote/helper/save_managment.dart';
-import 'package:twitch_emote/models/emote_pic.dart';
-import 'package:twitch_emote/models/game_state.dart';
 import 'package:twitch_emote/models/user.dart';
 
 enum HomeState { LOADING, LOGIN, HOME, NO_CONNECTION }

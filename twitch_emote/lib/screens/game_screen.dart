@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/models/game_state.dart';
@@ -21,6 +22,7 @@ class _GameScreenState extends State<GameScreen>
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return WillPopScope(
       onWillPop: () async {
         // Catch Pop Event, because calling resetGame in the dispose Method is unsafe
