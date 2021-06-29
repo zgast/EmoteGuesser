@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
             resizeToAvoidBottomInset: false,
             body: widgets[_currentIndex],
             bottomNavigationBar: BottomNavigationBar(
+              enableFeedback: true,
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.sports_esports),
