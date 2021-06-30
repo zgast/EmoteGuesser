@@ -43,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case HomeState.HOME:
         {
-          return Scaffold(
+          return LoginScreen();
+          /*return Scaffold(
             resizeToAvoidBottomInset: false,
             body: widgets[_currentIndex],
             bottomNavigationBar: BottomNavigationBar(
@@ -69,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _currentIndex = newindex;
                 });
               },
-            ),
-          ); // This trailing comma makes auto-formatting nicer for build methods.
+            ),*/
         }
     }
     return Container();

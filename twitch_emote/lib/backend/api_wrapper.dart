@@ -65,16 +65,16 @@ class ApiWrapper {
     return UserStats.fromJson(jsonDecode(response.body));
   }
 
-  Future<User> registerUser(String userName) async {
+  Future<User> registerUser(
+      String username, String password, bool register) async {
     final response = await http.post(
       Uri.parse('https://api.zgast.at/EmoteGuesser/users/add/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'key': '$apiKey'
       },
-      body: jsonEncode(<String, String>{
-        'key': '$apiKey',
-        'username': '$userName',
-      }),
+      body: jsonEncode(
+          <String, String>{'username': '$username', 'password': '$password'}),
     );
 
     if (response.statusCode == 500) return null;

@@ -62,6 +62,113 @@ class _StatsScreenState extends State<StatsScreen> {
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: Text(
+                        'Timegame',
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "GAMES PLAYED:",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "$timePlayed",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "AVERAGE GUESSED:",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "$timeAvg",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "GLOBAL RANK:",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                      width: double.maxFinite,
+                      child: Text(
+                        "$timeRank",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                  10, MediaQuery.of(context).size.height / 40, 10, 0),
+              height: 280 + MediaQuery.of(context).size.height / 50,
+              width: double.maxFinite,
+              child: Card(
+                elevation: 15,
+                shadowColor: Colors.deepPurple,
+                color: Colors.deepPurple,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: Text(
                         'Streakgame',
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.ellipsis,
@@ -145,113 +252,6 @@ class _StatsScreenState extends State<StatsScreen> {
                       width: double.maxFinite,
                       child: Text(
                         "$streakRank",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(
-                  10, MediaQuery.of(context).size.height / 40, 10, 0),
-              height: 280 + MediaQuery.of(context).size.height / 50,
-              width: double.maxFinite,
-              child: Card(
-                elevation: 15,
-                shadowColor: Colors.deepPurple,
-                color: Colors.deepPurple,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: Text(
-                        'Timegame',
-                        textAlign: TextAlign.center,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "GAMES PLAYED:",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "$timePlayed",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "AVERAGE GUESSED:",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "$timeAvg",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "GLOBAL RANK:",
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                      width: double.maxFinite,
-                      child: Text(
-                        "$timeRank",
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

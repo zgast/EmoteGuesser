@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/widgets/menu_button.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key, this.title}) : super(key: key);
@@ -14,9 +14,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _textEditingController = new TextEditingController();
-
+  TextEditingController _textEditingControllerUN = new TextEditingController();
+  TextEditingController _textEditingControllerPW = new TextEditingController();
+  var method = "LOGIN";
+  var username = "Username";
+  var message = "PLEASE REGISTER";
   bool loading = true;
+  bool register = true;
 
   @override
   void initState() {
@@ -31,12 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void _login(String text) async {
+  void _login(String usernamen, String password, bool register) async {
     setState(() {
       loading = true;
     });
 
-    var success = await context.read<AppState>().register(text);
+    var success =
+        await context.read<AppState>().register(username, password, register);
     if (!success) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to log you in ):')));
@@ -74,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               //margin: new EdgeInsets.only(top: 300),
               child: Text(
-                'Enter Username:',
+                '$message',
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -82,23 +87,66 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Container(
               width: 400,
-              margin: new EdgeInsets.only(
-                  bottom: 100, top: 30, left: 30, right: 30),
+              margin:
+                  new EdgeInsets.only(bottom: 10, top: 30, left: 30, right: 30),
               child: TextField(
-                controller: _textEditingController,
+                controller: _textEditingControllerUN,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Username'),
+                    border: OutlineInputBorder(), labelText: '$username'),
               ),
             ),
-            MenuButton(
-              name: "CONTINUE",
-              activated: !loading,
-              onPressed: () {
-                if (!loading) {
-                  _login(_textEditingController.text);
-                }
-              },
-            )
+            Container(
+              width: 400,
+              margin: new EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height - 600,
+                  top: 0,
+                  left: 30,
+                  right: 30),
+              child: TextField(
+                controller: _textEditingControllerPW,
+                enableSuggestions: false,
+                autocorrect: false,
+                obscureText: true,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Password'),
+              ),
+            ),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: MenuButton(
+                name: "$method",
+                activated: !loading,
+                onPressed: () {
+                  if (!loading) {
+                    setState(() {
+                      register = !register;
+                      if (method == "LOGIN") {
+                        method = "REGISTER";
+                        username = "Username#ID";
+                        message = "PLEASE LOGIN";
+                      } else {
+                        method = "LOGIN";
+                        username = "Username";
+                        message = "PLEASE REGISTER";
+                      }
+                    });
+                  }
+                },
+              ),
+            ),
+            Container(
+                margin: EdgeInsets.only(top: 5),
+                alignment: Alignment.bottomCenter,
+                child: MenuButton(
+                  name: "CONTINUE",
+                  activated: !loading,
+                  onPressed: () {
+                    if (!loading) {
+                      _login(_textEditingControllerUN.text,
+                          _textEditingControllerPW.text, register);
+                    }
+                  },
+                )),
           ],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
