@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
+import 'package:twitch_emote/screens/fail_screen.dart';
 import 'package:twitch_emote/screens/game_menu_screen.dart';
 import 'package:twitch_emote/screens/no_connection_screen.dart';
 import 'package:twitch_emote/screens/settings_screen.dart';
@@ -19,7 +20,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _currentIndex = 0;
 
-  List<Widget> widgets = [GameMenuScreen(), StatsScreen(), SettingsScreen()];
+  List<Widget> widgets = [
+    GameMenuScreen(),
+    StatsScreen(),
+    SettingsScreen(),
+    FailScreen()
+  ];
   @override
   Widget build(BuildContext context) {
     var homeState = context.watch<AppState>().homeState;
@@ -43,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case HomeState.HOME:
         {
-          return LoginScreen();
-          /*return Scaffold(
+          return FailScreen();
+          return Scaffold(
             resizeToAvoidBottomInset: false,
             body: widgets[_currentIndex],
             bottomNavigationBar: BottomNavigationBar(
@@ -70,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   _currentIndex = newindex;
                 });
               },
-            ),*/
+            ),
+          );
         }
     }
     return Container();

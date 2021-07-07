@@ -40,10 +40,9 @@ class AppState extends ChangeNotifier {
   }
 
   // Returns true if successful
-  Future<bool> register(String username, String password, bool register) async {
+  Future<bool> register(String username) async {
     try {
-      var u =
-          await ApiWrapper.instance.registerUser(username, password, register);
+      var u = await ApiWrapper.instance.registerUser(username);
       if (u == null) {
         return false;
       }

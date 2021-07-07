@@ -35,13 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void _login(String usernamen, String password, bool register) async {
+  void _login(String username) async {
     setState(() {
       loading = true;
     });
 
-    var success =
-        await context.read<AppState>().register(username, password, register);
+    var success = await context.read<AppState>().register(username);
     if (!success) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to log you in ):')));
@@ -142,8 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   activated: !loading,
                   onPressed: () {
                     if (!loading) {
-                      _login(_textEditingControllerUN.text,
-                          _textEditingControllerPW.text, register);
+                      _login(_textEditingControllerUN.text);
                     }
                   },
                 )),

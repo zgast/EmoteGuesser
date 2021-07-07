@@ -16,22 +16,31 @@ class GameMenuScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           LogoWidget(),
-          MenuButton(
-            name: "TIME GAME",
-            onPressed: () {
-              context.read<GameState>().type = GameType.TIME;
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => GameScreen(type: GameType.TIME)));
-            },
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            child: MenuButton(
+              name: "TIME GAME",
+              onPressed: () {
+                context.read<GameState>().type = GameType.TIME;
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => GameScreen(type: GameType.TIME)));
+              },
+            ),
           ),
-          MenuButton(
-            name: "STREAK GAME",
-            onPressed: () {
-              context.read<GameState>().type = GameType.STREAK;
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => GameScreen(type: GameType.STREAK)));
-            },
-          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: MenuButton(
+              name: "STREAK GAME",
+              onPressed: () {
+                context.read<GameState>().type = GameType.STREAK;
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => GameScreen(type: GameType.STREAK),
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
     );
