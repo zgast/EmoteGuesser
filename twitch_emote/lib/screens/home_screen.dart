@@ -6,7 +6,6 @@ import 'package:twitch_emote/screens/fail_screen.dart';
 import 'package:twitch_emote/screens/game_menu_screen.dart';
 import 'package:twitch_emote/screens/no_connection_screen.dart';
 import 'package:twitch_emote/screens/settings_screen.dart';
-import 'package:twitch_emote/screens/stats_screen.dart';
 
 import 'login_screen.dart';
 
@@ -22,9 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> widgets = [
     GameMenuScreen(),
-    StatsScreen(),
+    FailScreen(),
     SettingsScreen(),
-    FailScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case HomeState.HOME:
         {
-          return FailScreen();
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: widgets[_currentIndex],

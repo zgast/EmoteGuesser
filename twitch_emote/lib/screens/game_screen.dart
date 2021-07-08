@@ -31,16 +31,29 @@ class _GameScreenState extends State<GameScreen>
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text("Twitch Emote Guesser"),
-        ),
         body: Center(
           child: Column(
             children: [
               Container(
-                child: CounterWithTimer(),
+                padding: EdgeInsets.fromLTRB(10, 40, 10, 20),
+                height: 283,
+                width: double.maxFinite,
+                child: Card(
+                  elevation: 15,
+                  shadowColor: Colors.deepPurple,
+                  color: Colors.deepPurple,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: CounterWithTimer(),
+                      ),
+                      GuessTextField(
+                        textEditingController: _textEditingController,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              GuessTextField(textEditingController: _textEditingController),
               context.watch<GameState>().loading
                   ? Container(
                       child: Center(
