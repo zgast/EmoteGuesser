@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/models/game_state.dart';
+import 'package:twitch_emote/screens/home_screen.dart';
 import 'package:twitch_emote/widgets/menu_button.dart';
 
 class FailScreen extends StatefulWidget {
@@ -98,7 +99,10 @@ class _FailScreenState extends State<FailScreen> {
               alignment: Alignment.bottomCenter,
               child: MenuButton(
                 name: "Continue",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => HomeScreen()));
+                },
               ),
             )
           ],

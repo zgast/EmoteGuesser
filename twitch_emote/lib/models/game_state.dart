@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:quiver/async.dart';
 import 'package:twitch_emote/backend/api_wrapper.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/models/emote_pic.dart';
 import 'package:twitch_emote/models/game_type.dart';
-
-import 'package:quiver/async.dart';
 
 const timeGameLength = Duration(seconds: 22);
 const streakLengthPerImage = Duration(seconds: 8);
@@ -82,7 +81,6 @@ class GameState with ChangeNotifier {
     _remainingSeconds = 0;
     _streakLength = 0;
     type = GameType.NONE;
-    getNewImage();
   }
 
   StreamSubscription<CountdownTimer> _countDownSubscription;

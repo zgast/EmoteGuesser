@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
-import 'package:twitch_emote/screens/fail_screen.dart';
 import 'package:twitch_emote/screens/game_menu_screen.dart';
 import 'package:twitch_emote/screens/no_connection_screen.dart';
 import 'package:twitch_emote/screens/settings_screen.dart';
+import 'package:twitch_emote/screens/stats_screen.dart';
 
 import 'login_screen.dart';
 
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> widgets = [
     GameMenuScreen(),
-    FailScreen(),
+    StatsScreen(),
     SettingsScreen(),
   ];
   @override

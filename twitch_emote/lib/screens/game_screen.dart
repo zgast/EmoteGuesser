@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/models/game_state.dart';
 import 'package:twitch_emote/models/game_type.dart';
+import 'package:twitch_emote/screens/fail_screen.dart';
 import 'package:twitch_emote/widgets/counter_with_timer.dart';
 import 'package:twitch_emote/widgets/guess_text_field.dart';
 
@@ -68,7 +69,7 @@ class _GameScreenState extends State<GameScreen>
                         width: 300,
                         height: 300,
                       ),
-                    )
+                    ),
             ],
           ),
         ),
@@ -83,7 +84,8 @@ class _GameScreenState extends State<GameScreen>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<GameState>().startGame(widget.type, onFinish: () {
         if (mounted) {
-          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => FailScreen()));
         }
       });
     });

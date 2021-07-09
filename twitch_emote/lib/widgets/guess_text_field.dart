@@ -13,6 +13,7 @@ class GuessTextField extends StatelessWidget {
       width: 300,
       margin: new EdgeInsets.only(bottom: 50, top: 30),
       child: TextField(
+        cursorColor: Colors.white,
         style: TextStyle(color: Colors.white),
         controller: textEditingController,
         enableSuggestions: false,
