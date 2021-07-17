@@ -38,10 +38,10 @@ class _FailScreenState extends State<FailScreen> {
             Container(
               padding: EdgeInsets.fromLTRB(10, 60, 10, 0),
               child: Text(
-                "YOU FAILED",
+                "GAME OVER",
                 style: const TextStyle(
                     fontSize: 50,
-                    color: Colors.red,
+                    color: Colors.deepPurple,
                     fontWeight: FontWeight.w900),
               ),
             ),
@@ -70,7 +70,8 @@ class _FailScreenState extends State<FailScreen> {
                         "${context.watch<GameState>().currentPic.name}",
                         style: const TextStyle(
                           fontSize: 30,
-                          color: Colors.red,
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -100,8 +101,8 @@ class _FailScreenState extends State<FailScreen> {
               child: MenuButton(
                 name: "Continue",
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (_) => HomeScreen()));
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => HomeScreen()));
                 },
               ),
             )

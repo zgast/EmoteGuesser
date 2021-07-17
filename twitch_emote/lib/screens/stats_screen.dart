@@ -13,10 +13,10 @@ class StatsScreen extends StatefulWidget {
 class _StatsScreenState extends State<StatsScreen> {
   var timePlayed = "loading...",
       timeAvg = "loading...",
-      timeRank = "loading...",
+      timeGlobal = "loading...",
       streakPlayed = "loading...",
       streakAvg = "loading...",
-      streakRank = "loading...";
+      streakGlobal = "loading...";
 
   @override
   void initState() {
@@ -34,10 +34,12 @@ class _StatsScreenState extends State<StatsScreen> {
       if (stats != null) {
         timePlayed = stats.timeGames;
         timeAvg =
-            "${(int.parse(stats.timeGuessed) / int.parse(stats.timeGames)).toStringAsFixed(2)}";
+            "${(double.parse(stats.timeGuessed) / double.parse(stats.timeGames)).toStringAsFixed(2)}";
+        timeGlobal = stats.timeGlobal;
         streakPlayed = stats.streakGames;
         streakAvg =
-            "${(int.parse(stats.streakGuessed) / int.parse(stats.streakGames)).toStringAsFixed(2)} ";
+            "${(double.parse(stats.streakGuessed) / double.parse(stats.streakGames)).toStringAsFixed(2)} ";
+        streakGlobal = stats.streakGlobal;
       }
     });
   }
@@ -143,7 +145,7 @@ class _StatsScreenState extends State<StatsScreen> {
                       padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       width: double.maxFinite,
                       child: Text(
-                        "$timeRank",
+                        "$timeGlobal",
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -252,7 +254,7 @@ class _StatsScreenState extends State<StatsScreen> {
                       padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
                       width: double.maxFinite,
                       child: Text(
-                        "$streakRank",
+                        "$streakGlobal",
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

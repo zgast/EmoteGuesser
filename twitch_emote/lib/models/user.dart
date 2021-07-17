@@ -3,13 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class User {
   String name;
   String id;
-  String token;
+  String jwt;
 
-  User(this.name, this.id, this.token);
+  User(this.name, this.id, this.jwt);
 
   factory User.fromJson(Map<String, dynamic> json) {
     try {
-      return User(json["name"], json["userID"], json["token"]);
+      return User(json["name"], json["userID"], json["jwt"]);
     } catch (e) {
       return null;
     }
@@ -17,7 +17,7 @@ class User {
 
   static const idKey = 'userID';
   static const nameKey = 'username';
-  static const tokenKey = 'token';
+  static const jwtKey = 'jwt';
   factory User.fromSavedPreferences(SharedPreferences prefs) {
     String id = prefs.getString(idKey);
     if (id == null) {
@@ -27,7 +27,7 @@ class User {
     if (name == null) {
       return null;
     }
-    String token = prefs.getString(tokenKey);
+    String token = prefs.getString(jwtKey);
     if (token == null) {
       return null;
     }
@@ -37,6 +37,6 @@ class User {
   saveToSharedPreferences(SharedPreferences prefs) async {
     await prefs.setString(idKey, id);
     await prefs.setString(nameKey, name);
-    await prefs.setString(tokenKey, token);
+    await prefs.setString(jwtKey, jwt);
   }
 }

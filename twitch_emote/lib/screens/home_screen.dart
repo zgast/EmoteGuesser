@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:twitch_emote/screens/game_menu_screen.dart';
@@ -47,28 +50,33 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       case HomeState.HOME:
         {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
+          return PlatformScaffold(
+            //resizeToAvoidBottomInset: false,
             body: widgets[_currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              enableFeedback: true,
-              items: const <BottomNavigationBarItem>[
+            bottomNavBar: PlatformNavBar(
+              items: <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.sports_esports),
+                  icon: Platform.isIOS
+                      ? Icon(CupertinoIcons.game_controller)
+                      : Icon(Icons.sports_esports),
                   label: 'GAMES',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.perm_identity),
+                  icon: Platform.isIOS
+                      ? Icon(CupertinoIcons.person_crop_circle)
+                      : Icon(Icons.account_circle_outlined),
                   label: 'ACCOUNT',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
+                  icon: Platform.isIOS
+                      ? Icon(CupertinoIcons.gear)
+                      : Icon(Icons.settings),
                   label: 'SETTINGS',
                 ),
               ],
               currentIndex: _currentIndex,
-              selectedItemColor: Colors.deepPurple,
-              onTap: (newindex) {
+              //selectedItemColor: Colors.deepPurple,
+              itemChanged: (newindex) {
                 setState(() {
                   _currentIndex = newindex;
                 });

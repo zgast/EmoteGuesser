@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitch_emote/models/app_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,9 +29,14 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _initScreen(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Settings"),
+    return PlatformScaffold(
+      appBar: PlatformAppBar(
+        title: Text('Settings'),
+        cupertino: (_, __) => CupertinoNavigationBarData(
+          // Issue with cupertino where a bar with no transparency
+          // will push the list down. Adding some alpha value fixes it (in a hacky way)
+          backgroundColor: Colors.deepPurple,
+        ),
       ),
       body: SettingsList(
         sections: [
@@ -39,23 +47,29 @@ class SettingsScreen extends StatelessWidget {
               SettingsTile(
                 title: 'Username',
                 subtitle: user.name,
-                leading: Icon(Icons.account_circle),
+                leading: Icon(context.platformIcons.accountCircle),
+                trailing: SizedBox(),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'ID',
                 subtitle: user.id,
-                leading: Icon(Icons.info),
+                leading: Icon(context.platformIcons.info),
+                trailing: SizedBox(),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
-                title: 'Token/Password',
-                subtitle: 'click me to copy token',
-                leading: Icon(Icons.vpn_key),
-                onPressed: (BuildContext context) {
-                  Clipboard.setData(ClipboardData(text: user.token));
+                title: 'Log out',
+                subtitle: 'press to logout',
+                trailing: SizedBox(),
+                leading: Icon(context.platformIcons.delete),
+                onPressed: (BuildContext context) async {
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.clear();
+                  exit(0);
                 },
-              ),
+              )
             ],
           ),
           SettingsSection(
@@ -66,19 +80,21 @@ class SettingsScreen extends StatelessWidget {
                 title: 'App Version',
                 subtitle: '1.0',
                 leading: Icon(Icons.analytics),
+                trailing: SizedBox(),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'API Version',
                 subtitle: '1.0',
+                trailing: SizedBox(),
                 leading: Icon(Icons.api),
                 onPressed: (BuildContext context) {},
               ),
               SettingsTile(
                 title: 'Language',
                 subtitle: 'English',
-                leading: Icon(Icons.language),
-                onPressed: (BuildContext context) {},
+                trailing: SizedBox(),
+                leading: Icon(context.platformIcons.book),
               ),
               SettingsTile(
                 title: 'App Code',

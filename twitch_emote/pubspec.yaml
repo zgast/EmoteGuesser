@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons:
   settings_ui:
   url_launcher:
+  flutter_platform_widgets: ^1.9.5
 
 
   # State management

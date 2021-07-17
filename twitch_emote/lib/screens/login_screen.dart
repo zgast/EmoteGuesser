@@ -16,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _textEditingControllerUN = new TextEditingController();
   TextEditingController _textEditingControllerPW = new TextEditingController();
-  var method = "LOGIN";
+  var method = "PRESS TO LOGIN";
   var username = "Username";
   var message = "PLEASE REGISTER";
   bool loading = true;
@@ -35,12 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  void _login(String username) async {
+  void _login(String username, String password) async {
     setState(() {
       loading = true;
     });
-
-    var success = await context.read<AppState>().register(username);
+    var success = true;
+    if (register) {
+      success = await context.read<AppState>().register(username, password);
+    } else {
+      success = await context.read<AppState>().login(username, password);
+    }
     if (!success) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to log you in ):')));
@@ -112,25 +116,35 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Container(
               alignment: Alignment.bottomCenter,
-              child: MenuButton(
-                name: "$method",
-                activated: !loading,
-                onPressed: () {
-                  if (!loading) {
-                    setState(() {
-                      register = !register;
-                      if (method == "LOGIN") {
-                        method = "REGISTER";
-                        username = "Username#ID";
-                        message = "PLEASE LOGIN";
-                      } else {
-                        method = "LOGIN";
-                        username = "Username";
-                        message = "PLEASE REGISTER";
-                      }
-                    });
-                  }
-                },
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                height: 50.0,
+                width: 600,
+                child: RaisedButton(
+                  onPressed: () {
+                    if (!loading) {
+                      setState(() {
+                        register = !register;
+                        if (method == "PRESS TO LOGIN") {
+                          method = "PRESS TO REGISTER";
+                          username = "Username#ID";
+                          message = "PLEASE LOGIN";
+                        } else {
+                          method = "PRESS TO LOGIN";
+                          username = "Username";
+                          message = "PLEASE REGISTER";
+                        }
+                      });
+                    }
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.deepPurple)),
+                  padding: EdgeInsets.all(10.0),
+                  color: Colors.white,
+                  textColor: Colors.deepPurple,
+                  child: Text("$method", style: TextStyle(fontSize: 15)),
+                ),
               ),
             ),
             Container(
@@ -141,7 +155,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   activated: !loading,
                   onPressed: () {
                     if (!loading) {
-                      _login(_textEditingControllerUN.text);
+                      _login(_textEditingControllerUN.text,
+                          _textEditingControllerPW.text);
                     }
                   },
                 )),

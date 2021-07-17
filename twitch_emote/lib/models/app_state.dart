@@ -40,9 +40,29 @@ class AppState extends ChangeNotifier {
   }
 
   // Returns true if successful
-  Future<bool> register(String username) async {
+  Future<bool> register(String username, String password) async {
     try {
-      var u = await ApiWrapper.instance.registerUser(username);
+      var u = await ApiWrapper.instance.registerUser(username, password);
+      print(u.name);
+      if (u == null) {
+        return false;
+      }
+      _loggedInUser = u;
+      SaveManagment.saveUser(u);
+    } catch (e) {
+      print(e);
+      return false;
+    }
+
+    _homeState = HomeState.HOME;
+    notifyListeners();
+    return true;
+  }
+
+  Future<bool> login(String username, String password) async {
+    try {
+      var user = username.split("#");
+      var u = await ApiWrapper.instance.loginUser(user[0], user[1], password);
       if (u == null) {
         return false;
       }

@@ -85,7 +85,7 @@ class _GameScreenState extends State<GameScreen>
       context.read<GameState>().startGame(widget.type, onFinish: () {
         if (mounted) {
           Navigator.of(context)
-              .push(MaterialPageRoute(builder: (_) => FailScreen()));
+              .pushReplacement(MaterialPageRoute(builder: (_) => FailScreen()));
         }
       });
     });

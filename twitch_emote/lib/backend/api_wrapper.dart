@@ -14,7 +14,7 @@ class ApiWrapper {
 
   ApiWrapper._();
 
-  static const baseUrl = 'https://api.zgast.at/EmoteGuesser';
+  static const baseUrl = 'https://api.zgast.at/emote-guesser/v1';
 
   Future finishGame(int count, GameType game, User user) async {
     Uri uri;
@@ -22,12 +22,12 @@ class ApiWrapper {
     switch (game) {
       case GameType.TIME:
         {
-          uri = Uri.parse('$baseUrl/game/time/add/');
+          uri = Uri.parse('$baseUrl/game/time/add');
           break;
         }
       case GameType.STREAK:
         {
-          uri = Uri.parse('$baseUrl/game/streak/add/');
+          uri = Uri.parse('$baseUrl/game/streak/add');
           break;
         }
       case GameType.NONE:
@@ -39,40 +39,60 @@ class ApiWrapper {
       uri,
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'key': '$apiKey'
       },
-      body: jsonEncode(<String, String>{
-        'key': '$apiKey',
-        'guessed': "$count",
-        'username': "${user.name}",
-        'userID': "${user.id}",
-      }),
+      body: jsonEncode(
+          <String, String>{'guessed': "$count", 'jwt': "${user.jwt}"}),
     );
   }
 
   Future<UserStats> getUserStats(User user) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/stats/user/'),
+      Uri.parse('$baseUrl/stats/user'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
         'key': '$apiKey',
-        'username': "${user.name}",
-        'userID': "${user.id}",
-      }),
+      },
+      body: jsonEncode(<String, String>{'jwt': "${user.jwt}"}),
     );
 
     return UserStats.fromJson(jsonDecode(response.body));
   }
 
-  Future<User> registerUser(String username) async {
+  Future<User> registerUser(String username, String password) async {
     final response = await http.post(
-      Uri.parse('https://api.zgast.at/EmoteGuesser/users/add/'),
+      Uri.parse('$baseUrl/users/add'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'key': '$apiKey',
       },
-      body: jsonEncode(
-          <String, String>{'username': '$username', 'key': '$apiKey'}),
+      body: jsonEncode(<String, String>{
+        'username': '$username',
+        'password': '$password',
+      }),
+    );
+
+    if (response.statusCode == 500) return null;
+    Map<String, dynamic> json = jsonDecode(response.body);
+    User user = User.fromJson(json);
+    await SaveManagment.saveUser(user);
+
+    return user;
+  }
+
+  Future<User> loginUser(
+      String username, String userID, String password) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/users/login'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'key': '$apiKey',
+      },
+      body: jsonEncode(<String, String>{
+        'userID': '$userID',
+        'username': '$username',
+        'password': '$password',
+      }),
     );
 
     if (response.statusCode == 500) return null;
@@ -85,13 +105,12 @@ class ApiWrapper {
 
   Future<EmotePic> getRandomPic() async {
     final response = await http.post(
-      Uri.parse('https://api.zgast.at/EmoteGuesser/pictures/random/'),
+      Uri.parse('$baseUrl/pictures/random'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
         'key': '$apiKey',
-      }),
+      },
+      body: jsonEncode(<String, String>{}),
     );
 
     Map<String, dynamic> json = jsonDecode(response.body);
