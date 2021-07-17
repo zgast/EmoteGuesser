@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   build(BuildContext context) {
-    debugDefaultTargetPlatformOverride = TargetPlatform.android;
     return ChangeNotifierProvider<AppState>(
       create: (_) => appState,
       child: ChangeNotifierProvider<GameState>(
