@@ -17,9 +17,9 @@
 A apk runable machine
 
 ### How to use it
-- Download the .apk in the release
-- https://github.com/zgast/EmoteGuesser/releases/tag/0.2
-- execute it
+- Download the app
+ - [google play](https://play.google.com/store/apps/details?id=at.twitch_emote)
+ - [app store](https://apps.apple.com/at/app/emoteguesser/id1578166484)
 
 ## What I learned💡
 - Flutter
